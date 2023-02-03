@@ -1,0 +1,19 @@
+body {
+    text-align: center;
+    font-size: 2.3em;
+}
+
+table {
+    margin: auto;
+    padding: 0.5em;
+}
+
+.ruby {
+    font-family: Helvetica;
+    color: #000066;
+    font-size: 0.9em;
+}
+
+.Asian {
+    font-family: "MS UI Gothic";
+}
