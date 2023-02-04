@@ -5,6 +5,7 @@ body {
 
 table {
     margin: auto;
+    word-break: break-all;
     padding-top: 0.6em;
     padding-bottom: 0.6em;
 }
