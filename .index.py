@@ -1,11 +1,14 @@
 import os
+from lxml import etree
 
 
 def iter_link(path):
     for filename in os.listdir(path):
         if not filename.startswith('_'):
-            name, ext = os.path.splitext(filename)
-            yield f'<a href="./{path}/{filename}"><h2>{name}</h2></a>'
+            with open(os.path.join(path, filename), encoding='utf-8') as fp:
+                html = etree.HTML(fp.read())
+            title = html.find('./head/title').text
+            yield f'<a href="./{path}/{filename}"><h2>{title}</h2></a>'
 
 
 def main():
@@ -34,7 +37,7 @@ def main():
 
 </html>
 """ % '\n'.join(iter_link('-'))
-    with open('index.html', 'w', encoding='utf8') as fp:
+    with open('index.html', 'w', encoding='utf-8') as fp:
         fp.write(html)
 
 
