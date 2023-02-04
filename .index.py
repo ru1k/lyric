@@ -5,7 +5,6 @@ def iter_link(path):
     for filename in os.listdir(path):
         if not filename.startswith('_'):
             name, ext = os.path.splitext(filename)
-            filename = filename.replace(" ", "%20")
             yield f'<a href="./{path}/{filename}"><h1>{name}</h1></a>'
 
 
