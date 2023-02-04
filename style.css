@@ -1,11 +1,12 @@
 body {
+    min-width: max-content;
     text-align: center;
-    font-size: 2.3em;
+    font-size: 2.4em;
 }
 
 table {
     margin: auto;
-    word-break: break-all;
+    word-break: keep-all;
     padding-top: 0.6em;
     padding-bottom: 0.6em;
 }
