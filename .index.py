@@ -5,19 +5,18 @@ from lxml import etree
 def iter_lyric(path):
     for filename in os.listdir(path):
         if not filename.startswith('.'):
-            f = os.path.join(path, filename)
-            with open(f, 'rb') as fp:
+            filename = f'./{path}/{filename}'
+            with open(filename, 'rb') as fp:
                 html = etree.HTML(fp.read())
-            output(f, html)
-            title = html.find('./head/title').text
-            yield f'<a href="./{path}/{filename}"><h2>{title}</h2></a>'
+            yield f'<a href="{filename}"><h2>{html.find("./head/title").text}</h2></a>'
+            output(filename, html)
 
 
 def output(filename, html):
     for e in html.iter():
         e.tail = None
         if e.text and e.tag not in ('h2', 'td'):
-            e.text = e.text.strip() if e.tag != 'style' else e.text.replace(' ', '')
+            e.text = e.text.strip() if e.tag != 'style' else e.text.replace(' ', '').replace('\r', '')
     b = etree.tostring(html, encoding='utf-8', method='html', doctype='<!DOCTYPE html>').replace(b'\n', b'')
     with open(filename, 'wb') as fp:
         fp.write(b)
@@ -25,32 +24,13 @@ def output(filename, html):
 
 
 def main():
-    html = etree.HTML("""
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>Lyric</title>
-    <style>
-        div {
-            width: fit-content;
-            margin: auto;
-            padding-top: 1em;
-            padding-bottom: 1em;
-        }
-    </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes">
-</head>
-
-<body>
-    <div>
-        %s
-    </div>
-</body>
-
-</html>
-""" % ''.join(iter_lyric('-')))
-    output('index.html', html)
+    filename = 'index.html'
+    with open(filename, 'rb') as fp:
+        html = etree.HTML(fp.read())
+    body = html.find('body')
+    body.clear()
+    body.append(etree.XML(f"<div>{''.join(iter_lyric('-'))}</div>"))
+    output(filename, html)
 
 
 if __name__ == '__main__':
