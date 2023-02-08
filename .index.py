@@ -18,9 +18,8 @@ def iter_lyric(path):
             yield f'<a href="{filename}"><h2>{title.text}</h2></a>'
 
 
-def load(filename):
-    with open(filename, 'rb') as fp:
-        return etree.HTML(fp.read())
+def load(filename, parser=etree.HTMLParser(remove_comments=True)):
+    return etree.parse(filename, parser).getroot()
 
 
 def dump(filename, html):
