@@ -33,6 +33,13 @@ def dump(filename, html):
     return
 
 
+def css(filename):
+    with open(filename) as fp:
+        s = fp.read().replace(' ', '').replace('\n', '')
+    with open(filename, 'w') as fp:
+        fp.write(s)
+
+
 def main():
     filename = 'index.html'
     html = load(filename)
@@ -40,6 +47,7 @@ def main():
     body.clear()
     body.append(etree.XML(f"<div>{''.join(iter_lyric('-'))}</div>"))
     dump(filename, html)
+    css('style.css')
 
 
 if __name__ == '__main__':
