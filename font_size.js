@@ -1,9 +1,9 @@
-var e = document.documentElement;
-if (e.clientWidth > 980) {
+var width = document.documentElement.clientWidth;
+if (width > 980) {
     size = 1.8;
-} else if (e.clientWidth > 490) {
+} else if (width > 490) {
     size = 2.4;
 } else {
     size = 3;
 }
-e.style.fontSize = size + 'em';
+document.body.style.fontSize = size + 'em';
