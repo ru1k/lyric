@@ -14,6 +14,8 @@ def iter_lyric(path):
             _body = html.find('body')
             example.replace(body, _body)
             body = _body
+            for br in body.xpath('//td/br'):
+                br.getparent().remove(br)
             dump(filename, example)
             yield f'<a href="{filename}"><h2>{title.text}</h2></a>'
 
